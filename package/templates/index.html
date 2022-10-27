@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Scribd Unlock</title>
+
+    <link rel="icon" href="{{ url_for('static',filename='img/favicon.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/mdb.min.css') }}">
+
+    <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/da0ffeb57d.js" crossorigin="anonymous"></script>
+</head>
+
+<body style="background-color: rgb(29, 29, 29);">
+
+  <div class="container">
+    <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
+      <div class="text-center my-5">
+        <div class="h1 my-5 text-white">Unlock Scribd Document</div>
+        <form action="">
+          <div class="form-outline my-3">
+            <input type="text" id="scibdUrl" class="form-control text-white" />
+            <label class="form-label text-white" for="form12">Enter URL</label>
+          </div>
+        </form>
+        <button class="btn btn-outline-success btn-rounded my-2" id="unlockbtn" onclick="fun()">Unlock</button>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="{{ url_for('static',filename='js/mdb.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+
+  <script>
+    function sleep (time) {
+      return new Promise((resolve) => setTimeout(resolve, time));
+    }
+    function fun(){
+      var url = document.getElementById("scibdUrl").value
+      if(url != ""){
+        $("#unlockbtn").text("")
+        $("#unlockbtn").append('<div class="spinner-border spinner-border-sm text-success" role="status"><span class="visually-hidden">Loading...</span></div>')
+        $("#unlockbtn").removeAttr("onClick")
+        scribd_id = url.split("/")[4];
+        new_url = "https://www.scribd.com/embeds/" + scribd_id +"/content?start_page=1&view_mode=scroll&access_key=key-fFexxf7r1bzEfWu3HKwf"
+        sleep(500).then(() => {
+          let a= document.createElement('a');
+          a.target= '_blank';
+          a.href= new_url ; 
+          a.click();
+        });
+        
+      }
+      sleep(5000).then(() => {
+        $("#unlockbtn").html('Unlock')
+        $("#unlockbtn").attr("onClick","fun()")
+      });
+      
+      
+    }
+  </script>
+</body>
+
+</html>
